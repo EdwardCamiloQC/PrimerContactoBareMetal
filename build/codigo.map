@@ -1,0 +1,154 @@
+
+Discarded input sections
+
+ .group         0x0000000000000000        0xc build/main.o
+ .group         0x0000000000000000        0xc build/main.o
+ .text          0x0000000000000000        0x0 build/main.o
+ .data          0x0000000000000000        0x0 build/main.o
+ .bss           0x0000000000000000        0x0 build/main.o
+ .group         0x0000000000000000        0xc build/startup.o
+ .group         0x0000000000000000        0xc build/startup.o
+ .text          0x0000000000000000        0x0 build/startup.o
+ .data          0x0000000000000000        0x0 build/startup.o
+ .bss           0x0000000000000000        0x0 build/startup.o
+ .debug_macro   0x0000000000000000      0xa42 build/startup.o
+ .debug_macro   0x0000000000000000      0x34e build/startup.o
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+ram              0x000000001ffff000 0x0000000000004000 xrw
+flash            0x0000000000000000 0x0000000000020000 xr
+*default*        0x0000000000000000 0xffffffffffffffff
+
+Linker script and memory map
+
+LOAD build/main.o
+LOAD build/startup.o
+START GROUP
+LOAD /home/edward/local/opt/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v6-m/nofp/libgcc.a
+LOAD /home/edward/local/opt/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a
+END GROUP
+                0x0000000020003000                _estack = (ORIGIN (ram) + LENGTH (ram))
+
+.isrVector      0x0000000000000000       0xc0
+                0x0000000000000000                . = ALIGN (0x4)
+ *(.isrVector)
+ .isrVector     0x0000000000000000       0xc0 build/startup.o
+                0x0000000000000000                vectorTable
+                0x00000000000000c0                . = ALIGN (0x4)
+
+.text           0x00000000000000c0       0xd8
+                0x00000000000000c0                . = ALIGN (0x4)
+ *(.text)
+ *(.text*)
+ .text.delay    0x00000000000000c0       0x1e build/main.o
+                0x00000000000000c0                delay
+ *fill*         0x00000000000000de        0x2 
+ .text.main     0x00000000000000e0       0x50 build/main.o
+                0x00000000000000e0                main
+ .text.DefaultHandler
+                0x0000000000000130        0x6 build/startup.o
+                0x0000000000000130                DefaultHandler
+ *fill*         0x0000000000000136        0x2 
+ .text.ResetHandler
+                0x0000000000000138       0x60 build/startup.o
+                0x0000000000000138                ResetHandler
+                0x0000000000000198                . = ALIGN (0x4)
+                0x0000000000000198                _etext = .
+
+.glue_7         0x0000000000000198        0x0
+ .glue_7        0x0000000000000198        0x0 linker stubs
+
+.glue_7t        0x0000000000000198        0x0
+ .glue_7t       0x0000000000000198        0x0 linker stubs
+
+.vfp11_veneer   0x0000000000000198        0x0
+ .vfp11_veneer  0x0000000000000198        0x0 linker stubs
+
+.v4_bx          0x0000000000000198        0x0
+ .v4_bx         0x0000000000000198        0x0 linker stubs
+
+.iplt           0x0000000000000198        0x0
+ .iplt          0x0000000000000198        0x0 build/main.o
+
+.rel.dyn        0x0000000000000198        0x0
+ .rel.iplt      0x0000000000000198        0x0 build/main.o
+
+.rodata         0x0000000000000198        0x0
+                0x0000000000000198                . = ALIGN (0x4)
+ *(.rodata)
+ *(.rodata*)
+                0x0000000000000198                . = ALIGN (0x4)
+                0x0000000000000198                _sidata = LOADADDR (.data)
+
+.data           0x000000001ffff000        0x0 load address 0x0000000000000198
+                0x000000001ffff000                . = ALIGN (0x4)
+                0x000000001ffff000                _sdata = .
+ *(.data)
+ *(.data*)
+                0x000000001ffff000                . = ALIGN (0x4)
+                0x000000001ffff000                _edata = .
+
+.igot.plt       0x000000001ffff000        0x0 load address 0x0000000000000198
+ .igot.plt      0x000000001ffff000        0x0 build/main.o
+                0x000000001ffff000                . = ALIGN (0x4)
+
+.bss            0x000000001ffff000        0x0 load address 0x0000000000000198
+                0x000000001ffff000                _sbss = .
+ *(.bss)
+ *(.bss*)
+                0x000000001ffff000                . = ALIGN (0x4)
+                0x000000001ffff000                _ebss = .
+OUTPUT(build/codigo elf32-littlearm)
+LOAD linker stubs
+
+.debug_info     0x0000000000000000      0x1e7
+ .debug_info    0x0000000000000000       0xb4 build/main.o
+ .debug_info    0x00000000000000b4      0x133 build/startup.o
+
+.debug_abbrev   0x0000000000000000      0x147
+ .debug_abbrev  0x0000000000000000       0x83 build/main.o
+ .debug_abbrev  0x0000000000000083       0xc4 build/startup.o
+
+.debug_aranges  0x0000000000000000       0x50
+ .debug_aranges
+                0x0000000000000000       0x28 build/main.o
+ .debug_aranges
+                0x0000000000000028       0x28 build/startup.o
+
+.debug_ranges   0x0000000000000000       0x30
+ .debug_ranges  0x0000000000000000       0x18 build/main.o
+ .debug_ranges  0x0000000000000018       0x18 build/startup.o
+
+.debug_macro    0x0000000000000000      0xdf0
+ .debug_macro   0x0000000000000000       0x3c build/main.o
+ .debug_macro   0x000000000000003c      0xa42 build/main.o
+ .debug_macro   0x0000000000000a7e      0x34e build/main.o
+ .debug_macro   0x0000000000000dcc       0x24 build/startup.o
+
+.debug_line     0x0000000000000000      0x200
+ .debug_line    0x0000000000000000      0x105 build/main.o
+ .debug_line    0x0000000000000105       0xfb build/startup.o
+
+.debug_str      0x0000000000000000     0x3637
+ .debug_str     0x0000000000000000     0x35c9 build/main.o
+                                       0x372c (size before relaxing)
+ .debug_str     0x00000000000035c9       0x6e build/startup.o
+                                       0x36e3 (size before relaxing)
+
+.comment        0x0000000000000000       0x49
+ .comment       0x0000000000000000       0x49 build/main.o
+                                         0x4a (size before relaxing)
+ .comment       0x0000000000000049       0x4a build/startup.o
+
+.ARM.attributes
+                0x0000000000000000       0x2c
+ .ARM.attributes
+                0x0000000000000000       0x2c build/main.o
+ .ARM.attributes
+                0x000000000000002c       0x2c build/startup.o
+
+.debug_frame    0x0000000000000000       0x98
+ .debug_frame   0x0000000000000000       0x4c build/main.o
+ .debug_frame   0x000000000000004c       0x4c build/startup.o
